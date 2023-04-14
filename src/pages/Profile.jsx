@@ -28,7 +28,7 @@ const Profile = ({ user }) => {
       .unwrap()
       .then((resp) => {
         setFormErrors({})
-        toast(resp.data, toastOptions("success"))
+        toast(resp.data, toastOptions())
       })
     // .catch(errorHandler)
   }
@@ -40,14 +40,14 @@ const Profile = ({ user }) => {
 
     updateAvatar({ avatarData })
       .unwrap()
-      .then((resp) => toast(resp.data, toastOptions("success")))
+      .then((resp) => toast(resp.data, toastOptions()))
     // .catch(errorHandler)
   }
 
   const handleDeleteAvatar = async () => {
     deleteAvatar()
       .unwrap()
-      .then((resp) => toast(resp.data, toastOptions("success")))
+      .then((resp) => toast(resp.data, toastOptions()))
     // .catch(errorHandler)
   }
 
