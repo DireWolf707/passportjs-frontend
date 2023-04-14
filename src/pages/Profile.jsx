@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react"
 import { Stack, Box, TextField, Button, IconButton } from "@mui/material"
-// import { useBackendErrorHandler } from "../../hooks/useBackendErrorHandler"
+import { useBackendErrorHandler } from "../hooks/useBackendErrorHandler"
 import { useSnackbar } from "notistack"
 import { toastOptions } from "../utils/toastOptions"
 import { useUpdateProfileMutation, useDeleteAvatarMutation, useUpdateAvatarMutation } from "../store"
@@ -17,7 +17,7 @@ const Profile = ({ user }) => {
   const nameRef = useRef(null)
   const usernameRef = useRef(null)
   const [formErrors, setFormErrors] = useState({})
-  // const { errorHandler } = useBackendErrorHandler(setFormErrors)
+  const { errorHandler } = useBackendErrorHandler(setFormErrors)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -30,7 +30,7 @@ const Profile = ({ user }) => {
         setFormErrors({})
         toast(resp.data, toastOptions())
       })
-    // .catch(errorHandler)
+      .catch(errorHandler)
   }
 
   const handleUpdateAvatar = async (e) => {
@@ -41,14 +41,14 @@ const Profile = ({ user }) => {
     updateAvatar({ avatarData })
       .unwrap()
       .then((resp) => toast(resp.data, toastOptions()))
-    // .catch(errorHandler)
+      .catch(errorHandler)
   }
 
   const handleDeleteAvatar = async () => {
     deleteAvatar()
       .unwrap()
       .then((resp) => toast(resp.data, toastOptions()))
-    // .catch(errorHandler)
+      .catch(errorHandler)
   }
 
   return (

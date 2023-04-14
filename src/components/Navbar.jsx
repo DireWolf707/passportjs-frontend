@@ -7,11 +7,15 @@ import MenuIcon from "@mui/icons-material/Menu"
 import GoogleIcon from "@mui/icons-material/Google"
 import { useDispatch } from "react-redux"
 import { toggleSidebar } from "../store"
+import { useBackendErrorHandler } from "../hooks/useBackendErrorHandler"
 
 const Navbar = ({ user }) => {
   const dispatch = useDispatch()
   const isSmall = useMediaQuery((theme) => theme.breakpoints.only("xs"))
   const [logout, { isLoading }] = useLogoutMutation()
+  const { errorHandler } = useBackendErrorHandler()
+
+  const logoutHandler = () => logout().unwrap().catch(errorHandler)
 
   return (
     <>
@@ -54,7 +58,7 @@ const Navbar = ({ user }) => {
                 </Stack>
               ))}
 
-              <Button variant="contained" color="error" onClick={logout} disabled={isLoading}>
+              <Button variant="contained" color="error" onClick={logoutHandler} disabled={isLoading}>
                 logout
               </Button>
             </Stack>

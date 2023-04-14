@@ -5,16 +5,18 @@ import { navLinks } from "../utils/constants"
 import { useDispatch, useSelector } from "react-redux"
 import { toggleSidebar } from "../store"
 import { useLogoutMutation } from "../store"
+import { useBackendErrorHandler } from "../hooks/useBackendErrorHandler"
 
 const Sidebar = () => {
   const dispatch = useDispatch()
   const { sidebar: open } = useSelector((store) => store.data)
   const isSmall = useMediaQuery((theme) => theme.breakpoints.only("xs"))
   const [logout, { isLoading }] = useLogoutMutation()
+  const { errorHandler } = useBackendErrorHandler()
 
   const closeSidebar = () => dispatch(toggleSidebar(false))
   const logoutHandler = () => {
-    logout()
+    logout().unwrap().catch(errorHandler)
     closeSidebar()
   }
 
@@ -39,7 +41,7 @@ const Sidebar = () => {
       }}
     >
       <Box component="img" src="logo.svg" height="140px" />
-      
+
       <List sx={{ overflow: "auto" }}>
         {navLinks.map((link, idx) => (
           <Link key={idx} to={link.href} underline="none" onClick={closeSidebar}>
