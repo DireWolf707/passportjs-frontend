@@ -1,14 +1,14 @@
 import React, { useState, useRef } from "react"
 import { Stack, Box, TextField, Button, IconButton } from "@mui/material"
 // import { useBackendErrorHandler } from "../../hooks/useBackendErrorHandler"
-// import { useSnackbar } from "notistack"
-// import { toastOptions } from "../../utils/toastOptions"
+import { useSnackbar } from "notistack"
+import { toastOptions } from "../utils/toastOptions"
 import { useUpdateProfileMutation, useDeleteAvatarMutation, useUpdateAvatarMutation } from "../store"
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto"
 import DeleteIcon from "@mui/icons-material/Delete"
 
 const Profile = ({ user }) => {
-  // const { enqueueSnackbar: toast } = useSnackbar()
+  const { enqueueSnackbar: toast } = useSnackbar()
   const [updateProfile, { isLoading }] = useUpdateProfileMutation()
   const [updateAvatar, { isLoading: isAvatarUpdating }] = useUpdateAvatarMutation()
   const [deleteAvatar, { isLoading: isAvatarDeleting }] = useDeleteAvatarMutation()
@@ -28,7 +28,7 @@ const Profile = ({ user }) => {
       .unwrap()
       .then((resp) => {
         setFormErrors({})
-        // toast(resp.data, toastOptions("success"))
+        toast(resp.data, toastOptions("success"))
       })
     // .catch(errorHandler)
   }
@@ -38,14 +38,16 @@ const Profile = ({ user }) => {
     const avatarData = new FormData()
     avatarData.append("file", file)
 
-    updateAvatar({ avatarData }).unwrap()
-    // .then((resp) => toast(resp.data, toastOptions("success")))
+    updateAvatar({ avatarData })
+      .unwrap()
+      .then((resp) => toast(resp.data, toastOptions("success")))
     // .catch(errorHandler)
   }
 
   const handleDeleteAvatar = async () => {
-    deleteAvatar().unwrap()
-    // .then((resp) => toast(resp.data, toastOptions("success")))
+    deleteAvatar()
+      .unwrap()
+      .then((resp) => toast(resp.data, toastOptions("success")))
     // .catch(errorHandler)
   }
 
