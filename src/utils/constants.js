@@ -1,12 +1,11 @@
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"
+
 export const navHeight = "96px"
 
 export const navLinks = [
   {
-    title: "home",
-    href: "/",
-  },
-  {
     title: "profile",
     href: "/profile",
+    Icon: AccountCircleIcon,
   },
 ]

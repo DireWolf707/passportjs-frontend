@@ -2,8 +2,9 @@ import React from "react"
 import { Routes, Route, Navigate, Outlet } from "react-router-dom"
 import { Stack } from "@mui/material"
 import Navbar from "./components/Navbar"
+import Sidebar from "./components/Sidebar"
 import ThreeBars from "./components/loaders/ThreeBars"
-import { Profile, Home, Error404 } from "./pages"
+import { Profile, Home, Error404, Error500 } from "./pages"
 import { useLoginQuery } from "./store"
 
 const LoggedInRoute = ({ user, redirectPath }) => {
@@ -18,7 +19,8 @@ const App = () => {
   return (
     <Stack sx={{ minHeight: "100vh", width: "100vw", bgcolor: "brown" }}>
       <Navbar user={user?.data} />
-
+      {user && <Sidebar />}
+      
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Home />} />
@@ -26,6 +28,8 @@ const App = () => {
         <Route element={<LoggedInRoute user={user?.data} redirectPath="/" />}>
           <Route path="/profile" element={<Profile user={user?.data} />} />
         </Route>
+        {/* Server Error (500) */}
+        <Route path="/500" element={<Error500 />} />
         {/* Unknown Routes (404) */}
         <Route path="*" element={<Error404 />} />
         {/* End */}

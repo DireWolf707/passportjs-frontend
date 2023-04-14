@@ -1,11 +1,15 @@
 import React from "react"
 import { Stack, Box, Button, Typography, IconButton, useMediaQuery } from "@mui/material"
-import { navHeight, navLinks } from "../utils/constant"
+import { navHeight, navLinks } from "../utils/constants"
 import { Link } from "react-router-dom"
 import { useLogoutMutation } from "../store"
 import MenuIcon from "@mui/icons-material/Menu"
+import GoogleIcon from "@mui/icons-material/Google"
+import { useDispatch } from "react-redux"
+import { toggleSidebar } from "../store"
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
+  const dispatch = useDispatch()
   const isSmall = useMediaQuery((theme) => theme.breakpoints.only("xs"))
   const [logout, { isLoading }] = useLogoutMutation()
 
@@ -28,35 +32,46 @@ const Navbar = () => {
           },
         }}
       >
-        <Box component="img" src="/favicon.svg" height="65px" />
+        <Link to="/">
+          <Box component="img" src="/favicon.svg" height="65px" />
+        </Link>
 
-        {isSmall ? (
-          <IconButton onClick={() => setOpen(true)}>
-            <MenuIcon />
-          </IconButton>
-        ) : (
-          <Stack flexDirection="row" gap={2}>
-            {navLinks.map((link, idx) => (
-              <Stack key={idx} flexDirection="row" alignItems="center" gap={0.3}>
-                {/* <link.Icon /> */}
-                <Link to={link.href}>
-                  <Typography fontFamily="Righteous" fontSize="14px">
-                    {link.title}
-                  </Typography>
-                </Link>
-              </Stack>
-            ))}
+        {user &&
+          (isSmall ? (
+            <IconButton onClick={() => dispatch(toggleSidebar(true))}>
+              <MenuIcon />
+            </IconButton>
+          ) : (
+            <Stack flexDirection="row" gap={2}>
+              {navLinks.map((link, idx) => (
+                <Stack key={idx} flexDirection="row" alignItems="center" gap={0.3}>
+                  <link.Icon />
+                  <Link to={link.href}>
+                    <Typography fontFamily="Righteous" fontSize="14px">
+                      {link.title}
+                    </Typography>
+                  </Link>
+                </Stack>
+              ))}
 
-            <Button variant="contained" color="primary" href={`${import.meta.env.VITE_SERVER_URL}/user/login/google`}>
-              LOGIN
-            </Button>
+              <Button variant="contained" color="error" onClick={logout} disabled={isLoading}>
+                logout
+              </Button>
+            </Stack>
+          ))}
 
-            <Button variant="contained" color="error" onClick={logout} disabled={isLoading}>
-              LOGOUT
-            </Button>
-          </Stack>
+        {!user && (
+          <Button
+            startIcon={<GoogleIcon />}
+            variant="contained"
+            color="primary"
+            href={`${import.meta.env.VITE_SERVER_URL}/user/login/google`}
+          >
+            login
+          </Button>
         )}
       </Stack>
+
       <Box height={navHeight} />
     </>
   )

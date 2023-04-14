@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
+import { dataReducer, toggleSidebar } from "./slices/dataSlice"
 import {
   userApi,
   useLoginQuery,
@@ -11,6 +12,7 @@ import {
 
 export const store = configureStore({
   reducer: {
+    data: dataReducer,
     [userApi.reducerPath]: userApi.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userApi.middleware),
@@ -18,4 +20,5 @@ export const store = configureStore({
 
 setupListeners(store.dispatch)
 
+export { toggleSidebar }
 export { useLoginQuery, useUpdateAvatarMutation, useDeleteAvatarMutation, useUpdateProfileMutation, useLogoutMutation }
