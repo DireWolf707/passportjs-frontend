@@ -1,11 +1,11 @@
 import React, { useEffect } from "react"
 import { useMediaQuery, Box, Drawer, List, ListItemButton, ListItemIcon, ListItemText, Button } from "@mui/material"
 import { Link } from "react-router-dom"
-import { navLinks } from "../utils/constants"
+import { navLinks } from "../../utils/constants"
 import { useDispatch, useSelector } from "react-redux"
-import { toggleSidebar } from "../store"
-import { useLogoutMutation } from "../store"
-import { useBackendErrorHandler } from "../hooks/useBackendErrorHandler"
+import { toggleSidebar } from "../../store"
+import { useLogoutMutation } from "../../store"
+import { useBackendErrorHandler } from "../../hooks/useBackendErrorHandler"
 
 const Sidebar = () => {
   const dispatch = useDispatch()

@@ -3,12 +3,15 @@ import { Stack, Box, TextField, Button, IconButton } from "@mui/material"
 import { useBackendErrorHandler } from "../hooks/useBackendErrorHandler"
 import { useSnackbar } from "notistack"
 import { toastOptions } from "../utils/toastOptions"
-import { useUpdateProfileMutation, useDeleteAvatarMutation, useUpdateAvatarMutation } from "../store"
+import { useUpdateProfileMutation, useDeleteAvatarMutation, useUpdateAvatarMutation, useFetchProfileQuery } from "../store"
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto"
 import DeleteIcon from "@mui/icons-material/Delete"
 
-const Profile = ({ user }) => {
+const Profile = () => {
   const { enqueueSnackbar: toast } = useSnackbar()
+  const {
+    data: { data: user },
+  } = useFetchProfileQuery()
   const [updateProfile, { isLoading }] = useUpdateProfileMutation()
   const [updateAvatar, { isLoading: isAvatarUpdating }] = useUpdateAvatarMutation()
   const [deleteAvatar, { isLoading: isAvatarDeleting }] = useDeleteAvatarMutation()
