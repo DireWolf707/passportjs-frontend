@@ -36,7 +36,7 @@ const Sidebar = () => {
           gap: 2,
           px: "12px",
           py: "24px",
-          width: "65%",
+          width: "260px",
         },
       }}
     >
