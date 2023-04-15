@@ -3,7 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/query"
 import { dataReducer, toggleSidebar } from "./slices/dataSlice"
 import {
   userApi,
-  useLoginQuery,
+  useFetchProfileQuery,
   useUpdateAvatarMutation,
   useDeleteAvatarMutation,
   useUpdateProfileMutation,
@@ -21,4 +21,4 @@ export const store = configureStore({
 setupListeners(store.dispatch)
 
 export { toggleSidebar }
-export { useLoginQuery, useUpdateAvatarMutation, useDeleteAvatarMutation, useUpdateProfileMutation, useLogoutMutation }
+export { useFetchProfileQuery, useUpdateAvatarMutation, useDeleteAvatarMutation, useUpdateProfileMutation, useLogoutMutation }

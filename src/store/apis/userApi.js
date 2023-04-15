@@ -10,7 +10,7 @@ export const userApi = createApi({
 
   endpoints(builder) {
     return {
-      login: builder.query({
+      fetchProfile: builder.query({
         providesTags: ["profile"],
         query: () => ({
           url: "/me",
@@ -55,4 +55,5 @@ export const userApi = createApi({
   },
 })
 
-export const { useLoginQuery, useUpdateAvatarMutation, useDeleteAvatarMutation, useUpdateProfileMutation, useLogoutMutation } = userApi
+export const { useFetchProfileQuery, useUpdateAvatarMutation, useDeleteAvatarMutation, useUpdateProfileMutation, useLogoutMutation } =
+  userApi
