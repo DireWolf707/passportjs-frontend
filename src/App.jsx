@@ -9,13 +9,13 @@ import { Profile, Home, Error404, Error500 } from "./pages"
 import { useFetchProfileQuery } from "./store"
 
 const App = () => {
-  const { data: profile, isFetching } = useFetchProfileQuery()
+  const { data: profile, isFetching, isError } = useFetchProfileQuery()
   const user = profile?.data
 
-  if (isFetching) return <ThreeBars />
+  if (isFetching || isError) return <ThreeBars />
 
   return (
-    <Stack sx={{ minHeight: "100vh", width: "100vw", bgcolor: "brown" }}>
+    <Stack minHeight="100vh" width="100vw" bgcolor="brown">
       <Navbar />
       {user && <Sidebar />}
 
