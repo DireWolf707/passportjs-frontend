@@ -1,5 +1,6 @@
 import { useSnackbar } from "notistack"
 import { useCallback } from "react"
+import { capitalize } from "@mui/material"
 import { toastOptions as toastDefaultOptions } from "../utils/toastOptions"
 
 const toastOptions = toastDefaultOptions("error")
@@ -12,7 +13,7 @@ const handleError400 = ({ message }, toast, setFormErrors) => {
   const formError = {}
   message.split(",").map((e) => {
     const [field, value] = e.split(":")
-    formError[field] = value
+    formError[field] = capitalize(value)
   })
   setFormErrors(formError)
 }
